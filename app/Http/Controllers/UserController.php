@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Auth;
 use App\Http\Requests;
+use Session;
 
 class UserController extends Controller
 {
@@ -27,6 +28,11 @@ class UserController extends Controller
       ]);
       $user->save();
       Auth::login($user);
+      if(Session::has('oldUrl')) {
+        $oldUrl = Session::get('oldUrl');
+        Session::forget('oldUrl');
+        return redirect()->to($oldUrl);
+      }
       return redirect()->route('user.profile');
     }
 
@@ -47,6 +53,11 @@ class UserController extends Controller
         'password' => $request->input('password')
       ]))
       {
+        if(Session::has('oldUrl')) {
+          $oldUrl = Session::get('oldUrl');
+          Session::forget('oldUrl');
+          return redirect()->to($oldUrl);
+        }
         return redirect()->route('user.profile');
       }
       return redirect()->back();
@@ -60,6 +71,6 @@ class UserController extends Controller
     public function getLogout()
     {
       Auth::logout();
-      return redirect()->back();
+      return redirect()->route('user.signin');
     }
 }
