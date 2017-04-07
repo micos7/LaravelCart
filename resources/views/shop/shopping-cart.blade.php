@@ -17,8 +17,8 @@ Laravel shopping cart
           <div class="btn-group">
             <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action <span class="caret"></span></button>
             <ul class="dropdown-menu">
-              <li><a href="#">Reduce by 1</a></li>
-              <li><a href="#">Add 1</a></li>
+              <li><a href="{{ route('product.ReduceByOne',['id' => $product['item']['id']]) }}">Reduce by 1</a></li>
+              <li><a href="{{ route('product.remove',['id' => $product['item']['id']]) }}">Reduce all</a></li>
             </ul>
           </div>
         </div>
